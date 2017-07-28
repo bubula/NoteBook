@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="120dp"
+        android:background="#FF21ABA0"
+        android:layout_height="120dp" />
+    
+    <TextView
+        android:id="@+id/tv_dpi"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="360dp" />
+    <Button
+        android:id="@+id/bt_get_dpi"
+        android:layout_width="match_parent"
+        android:text="@string/shuaxindpi"
+        android:layout_height="48dp" />
+
+</LinearLayout>
