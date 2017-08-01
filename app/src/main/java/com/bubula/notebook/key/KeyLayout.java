@@ -41,7 +41,7 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 	private InputMethodManager manager;
 	private LinearLayout moreView;
 	private FrameLayout face_fl;// 表情
-	private ImageButton key_show_voice, key_keyboard;
+//	private ImageButton key_show_voice, key_keyboard;
 	private RelativeLayout key_keyboard_rl;// 文字输入区域
 	private ImageButton key_more_show;// 显示更多功能区域
 	private ImageButton key_more_hide;// 隐藏更多功能区域
@@ -82,9 +82,6 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 
 
 	private void initKeyView() {
-		key_show_voice = (ImageButton) moreView
-				.findViewById(R.id.key_show_voice);
-		key_keyboard = (ImageButton) moreView.findViewById(R.id.key_keyboard);
 		key_face_show = (ImageButton) moreView.findViewById(R.id.key_face_show);
 		key_face_hide = (ImageButton) moreView.findViewById(R.id.key_face_hide);
 		key_more_show = (ImageButton) moreView.findViewById(R.id.key_more_show);
@@ -102,8 +99,6 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 		key_editText.setOnFocusChangeListener(focusChangeListener);
 		checkKeyboardHeight();
 		key_editText.setOnClickListener(this);
-		key_show_voice.setOnClickListener(this);
-		key_keyboard.setOnClickListener(this);
 		key_face_show.setOnClickListener(this);
 		key_face_hide.setOnClickListener(this);
 		key_more_show.setOnClickListener(this);
@@ -115,13 +110,9 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.key_show_voice:// 现实音频
-			showRecordVoice();
-			break;
-		case R.id.key_keyboard:// 键盘
-			showKeyBoardRl();
-			break;
 		case R.id.key_face_show:// 显示表情
+			// 键盘
+//			showKeyBoardRl();
 			showFace();
 			break;
 		case R.id.key_face_hide:// 隐藏表情
@@ -161,8 +152,6 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 		}
 		key_keyboard_rl.setVisibility(INVISIBLE);
 		key_record_voice.setVisibility(VISIBLE);
-		key_keyboard.setVisibility(VISIBLE);
-		key_show_voice.setVisibility(INVISIBLE);
 
 	}
 
@@ -175,8 +164,6 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 		}
 		key_record_voice.setVisibility(INVISIBLE);
 		key_keyboard_rl.setVisibility(VISIBLE);
-		key_show_voice.setVisibility(VISIBLE);
-		key_keyboard.setVisibility(INVISIBLE);
 	}
 
 	/**
