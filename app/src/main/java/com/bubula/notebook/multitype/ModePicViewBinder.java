@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 
 import com.bubula.notebook.R;
 
+import java.util.List;
+
 import me.drakeet.multitype.ItemViewBinder;
-import me.drakeet.multitype.MultiTypeAdapter;
 
 /**
  * Created by songBaoKang on 2017/7/28.
  */
 public class ModePicViewBinder extends ItemViewBinder<ModePic, ModePicViewBinder.ViewHolder> {
-    MultiTypeAdapter adapter;
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(
@@ -27,26 +27,32 @@ public class ModePicViewBinder extends ItemViewBinder<ModePic, ModePicViewBinder
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull ModePic modePic) {
-        adapter = new MultiTypeAdapter();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(holder.recyclerView.getContext());
-        holder.recyclerView.setLayoutManager(linearLayoutManager);
-        /* 注册类型和 View 的对应关系 */
-        adapter.register(Pic.class, new PicViewBinder());
-        adapter.setItems(modePic.pics);
-        ViewGroup.LayoutParams layoutParams = holder.recyclerView.getLayoutParams();
-        //高度等于＝条目的高度＋ 10dp的间距 ＋ 10dp（为了让条目居中）
-        layoutParams.height = 150*60;
-        holder.recyclerView.setLayoutParams(layoutParams);
-        holder.recyclerView.setLayoutManager(new LinearLayoutManager(holder.recyclerView.getContext(), LinearLayoutManager.HORIZONTAL,false));
-        holder.recyclerView.setAdapter(adapter);
+        holder.setPosts(modePic.pics);
+        assertGetAdapterNonNull();
     }
-
+    /**
+     * Just test
+     */
+    private void assertGetAdapterNonNull() {
+        if (getAdapter() == null) {
+            throw new NullPointerException("getAdapter() == null");
+        }
+    }
     static class ViewHolder extends RecyclerView.ViewHolder {
         RecyclerView recyclerView;
-
+        ModePicAdapter modePicAdapter;
         ViewHolder(View itemView) {
             super(itemView);
             recyclerView= (RecyclerView) itemView.findViewById(R.id.rv);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(itemView.getContext());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(layoutManager);
+            modePicAdapter = new ModePicAdapter();
+            recyclerView.setAdapter(modePicAdapter);
+        }
+        private void setPosts(List<Pic> posts) {
+            modePicAdapter.setPosts(posts);
+            modePicAdapter.notifyDataSetChanged();
         }
     }
 }

@@ -3,4 +3,49 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <!-- -listview画布背景色 -->
+    <color name="listview_back">#fefefe</color>
+
+    <!-- 主页整体背景 -->
+    <color name="home_background">#f0f0f0</color>
+    <!-- 主页深色字体的颜色 -->
+    <color name="home_mingzi">#111111</color>
+    <color name="home_weizhi">#999999</color>
+    <color name="blue">#587cf1</color>
+    <color name="goods_miaoshu">#555555</color>
+    <color name="home_tex">#AAAAAA</color>
+    <color name="linecolor">#dddddd</color>
+    <!-- 主页浅色字体的颜色（地理位置时间） -->
+
+    <color name="fuwu_qianming">#666666</color>
+    <!-- 主页服装描述的 字体颜色 -->
+    <color name="fuwu_mingzi">#333333</color>
+    <color name="guanzhu_btn">#fefefe</color>
+    <!-- -主页图标背景色 包括文字 红色字体 -->
+    <color name="home_tubiao">#ef5464</color>
+    <color name="green">#32CD32</color>
+    <color name="white_tv">#f0f0f0</color>
+    <!-- -灰色字体的样式 -->
+    <color name="text_color">#808080</color>
+    <color name="dongtai_name">#99808080</color>
+    <!-- 弹出框背景色 -->
+    <color name="window_bag">#b0000000</color>
+    <!-- IM -->
+    <color name="top_bar_normal_bg">#ef5464</color>
+    <color name="gray_normal">#666667</color>
+    <color name="common_bg">#fcfcfc</color>
+    <color name="orange">#FFA500</color>
+    <color name="btn_gray_normal">#c0c0c0</color>
+    <color name="btn_blue_normal">#1e90ff</color>
+    <color name="btn_blue_pressed">#0066FF</color>
+    <color name="guige_normal">#ffffff</color>
+    <color name="white">#cccccc</color>
+    <color name="unfocused">#fefefe</color>
+    <color name="pressed">#ef5464</color>
+    <color name="selected">#ef5464</color>
+    <color name="focused">#ef5464</color>
+    <color name="touming">#00000000</color>
+    <color name="tex_color">#bbbbbb</color>
+    <color name="province_line_border">#D0D0D0</color>
+    <color name="voip_interface_text_color">#bababa</color>
 </resources>

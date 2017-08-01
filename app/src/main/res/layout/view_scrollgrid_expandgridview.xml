@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/listview_back"
+    android:orientation="vertical" >
+
+    <com.bubula.notebook.key.NoScrollView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:background="@color/listview_back"
+        android:fadingEdge="none"
+        android:gravity="center"
+        android:scrollbars="none" >
+    </com.bubula.notebook.key.NoScrollView>
+
+</LinearLayout>

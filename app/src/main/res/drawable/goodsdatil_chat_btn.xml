@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- 商品详情页的聊一聊按钮样式 -->
+
+    <corners android:radius="4dp" />
+
+    <solid android:color="#ef5464" />
+
+</shape>  
