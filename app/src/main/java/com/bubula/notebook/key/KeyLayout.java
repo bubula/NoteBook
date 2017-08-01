@@ -20,8 +20,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
 import com.bubula.notebook.R;
 import com.bubula.notebook.kLog.KLog;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,10 +56,8 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 	private boolean keyBoardShow = false;
 	private boolean faecBoardShow = false;
 	private boolean moreBoardShow = false;
-	private ScrollGridLayout face_face;
 	private List<String> facereslist;
 	int facegridItemWidth = 0;
-	private ScrollGridLayout face_more;
 	int moregridItemWidth = 0;
 	private OnClickListener sendListener;
 
@@ -68,7 +68,7 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 		moreView = (LinearLayout) LayoutInflater.from(mcontext).inflate(
 				R.layout.view_key, null);
 		addView(moreView);
-		keyboardHeight = 798;
+		keyboardHeight = 759;
 //				WzlpPreferences.getInstance(context)
 //				.getKeyboardHeight();
 
@@ -83,103 +83,11 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 
 	private void initFaceView() {
 		face_rl = (RelativeLayout) moreView.findViewById(R.id.face_rl);
-		face_face = (ScrollGridLayout) findViewById(R.id.face_face);
-		face_more = (ScrollGridLayout) findViewById(R.id.face_more);
-		setFaceView();
 		setKeyView();
 	}
 
-	/**
-	 * 设置更多功能区域
-	 */
-	public void setMoreView(List<KeyMoreMode> moreModes) {
-		moregridItemWidth = face_more.setHorizontalNum(4);
-		Log.i(TAG, "gridItemWidth" + moregridItemWidth);
-		face_more.addView(new KeyMoreAdpter(moreModes.subList(0,
-				moreModes.size()), mcontext, moregridItemWidth));
-		face_more.hideHint();
-		face_more.setPagerAdapter();
-	}
 
-	/**
-	 * 设置更多按钮区域点击事件
-	 * 
-	 * @param itemClickListener
-	 */
-	public void setMoreViewOnItemClickListener(
-			ScrollGridLayout.setOnItemClickListener itemClickListener) {
-		face_more.setOnItemClickListener(itemClickListener);
-	}
 
-	/**
-	 * 设置表情键盘区域
-	 */
-	private void setFaceView() {
-		getFaceRes();
-		facegridItemWidth = face_face.setHorizontalNum(7);
-		int pagetnum = getFacePageNum(20);
-		for (int i = 0; i < pagetnum; i++) {
-			List<String> list = new ArrayList<String>();
-			int startposition = i * 20;
-			int endposition = 0;
-			if (i != pagetnum - 1) {
-				endposition = i * 20 + 20;
-			} else {
-				endposition = facereslist.size() - 1;
-			}
-			list.addAll(facereslist.subList(startposition, endposition));
-			list.add("delete_expression");
-			face_face.addView(new KeyFaceAdapter(mcontext, 1, list,
-					facegridItemWidth));
-		}
-		face_face.setPagerAdapter();
-		face_face.setOnItemClickListener(new ScrollGridLayout.setOnItemClickListener() {
-			@Override
-			public void onItemClick(Object object) {
-				String filename = (String) object;
-				try {
-					Log.i(TAG, "filename" + filename);
-					if (filename != "delete_expression") { // 不是删除键，显示表情
-						// 这里用的反射，所以混淆的时候不要混淆SmileUtils这个类
-//						Class clz;
-//						clz = Class.forName("com.hswy.wzlp.util.SmileUtils");
-//						Field field = clz.getField(filename);
-//						key_editText.append(SmileUtils.getSmiledText(mcontext,
-//								(String) field.get(null)));
-					} else { // 删除文字或者表情
-						if (!TextUtils.isEmpty(key_editText.getText())) {
-
-							int selectionStart = key_editText
-									.getSelectionStart();// 获取光标的位置
-							if (selectionStart > 0) {
-								String body = key_editText.getText().toString();
-								String tempStr = body.substring(0,
-										selectionStart);
-								int i = tempStr.lastIndexOf("[");// 获取最后一个表情的位置
-//								if (i != -1) {
-//									CharSequence cs = tempStr.substring(i,
-//											selectionStart);
-//									if (SmileUtils.containsKey(cs.toString()))
-//										key_editText.getEditableText().delete(
-//												i, selectionStart);
-//									else
-//										key_editText.getEditableText().delete(
-//												selectionStart - 1,
-//												selectionStart);
-//								} else {
-//									key_editText.getEditableText().delete(
-//											selectionStart - 1, selectionStart);
-//								}
-							}
-						}
-
-					}
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	private int getFacePageNum(int count) {
 		int b = facereslist.size() / count;
@@ -330,8 +238,6 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 		if (!face_rl.isShown()) {
 			face_rl.setVisibility(VISIBLE);
 		}
-		face_face.setVisibility(GONE);
-		face_more.setVisibility(VISIBLE);
 		if (keyBoardShow) {
 			hideKeyboard();
 		}
@@ -347,12 +253,6 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 		key_more_hide.setVisibility(INVISIBLE);
 		if (key_record_voice.getVisibility() == VISIBLE) {
 			face_rl.setVisibility(GONE);
-			if (face_face != null) {
-				face_face.setVisibility(GONE);
-			}
-			if (face_more != null) {
-				face_more.setVisibility(GONE);
-			}
 		} else {
 			showKeyboard();
 		}
@@ -372,8 +272,6 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 		if (!face_rl.isShown()) {
 			face_rl.setVisibility(VISIBLE);
 		}
-		face_face.setVisibility(VISIBLE);
-		face_more.setVisibility(GONE);
 		if (keyBoardShow) {
 			hideKeyboard();
 		}
@@ -422,12 +320,6 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 				return;
 			} else {
 				face_rl.setVisibility(GONE);
-				if (face_face != null) {
-					face_face.setVisibility(GONE);
-				}
-				if (face_more != null) {
-					face_more.setVisibility(GONE);
-				}
 			}
 
 		}
@@ -530,7 +422,6 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 //			WzlpPreferences.getInstance(mcontext).saveKeyboardHeight(
 //					keyboardHeight);
 
-			setFaceView();
 		}
 
 	}
@@ -560,8 +451,6 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 		key_more_show.setVisibility(VISIBLE);
 		key_more_hide.setVisibility(INVISIBLE);
 		face_rl.setVisibility(GONE);
-		face_face.setVisibility(GONE);
-		face_more.setVisibility(GONE);
 	}
 
 	private void showKeyboard() {
