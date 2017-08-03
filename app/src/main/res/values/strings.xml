@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">NoteBook</string>
     <string name="shuaxindpi">刷新数据</string>
+    <string name="btn_send">发送</string>
 </resources>

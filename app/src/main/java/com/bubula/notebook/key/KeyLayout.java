@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.bubula.notebook.R;
 import com.bubula.notebook.kLog.KLog;
@@ -38,13 +38,12 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
     private InputMethodManager manager;
     private LinearLayout moreView;
     private FrameLayout face_fl;// 表情
-    //	private ImageButton key_show_voice, key_keyboard;
-    private RelativeLayout key_keyboard_rl;// 文字输入区域
-    private ImageButton key_more_show;// 显示更多功能区域
-    private ImageButton key_face_show;// 显示表情键盘
-    private ImageButton key_face_hide;// 隐藏表情键盘
+//    private RelativeLayout rlKeyboard;// 文字输入区域
+    private ImageButton ivPic;// 显示更多功能区域
+    private ImageButton ivEmoji;// 显示表情键盘
+    private ImageButton ivBoard;// 显示输入键盘
     private int keyboardHeight;// 键盘高度835/598/582
-    private EditText key_editText;
+    private EditText editContent;//文字输入框
     private boolean keyBoardShow = false;
     private boolean faecBoardShow = false;
     private boolean moreBoardShow = false;
@@ -76,22 +75,22 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 
 
     private void initKeyView() {
-        key_face_show = (ImageButton) moreView.findViewById(R.id.key_face_show);
-        key_face_hide = (ImageButton) moreView.findViewById(R.id.key_face_hide);
-        key_more_show = (ImageButton) moreView.findViewById(R.id.key_more_show);
-        key_editText = (EditText) moreView.findViewById(R.id.key_editText);
-        key_editText.setFocusable(true);
-        key_editText.setFocusableInTouchMode(true);
-        key_editText.requestFocus();
-        key_keyboard_rl = (RelativeLayout) moreView
-                .findViewById(R.id.key_keyboard_rl);
-        key_editText.addTextChangedListener(textWatcher);
-        key_editText.setOnFocusChangeListener(focusChangeListener);
+        ivEmoji = (ImageButton) moreView.findViewById(R.id.iv_key_emoji);
+        ivBoard = (ImageButton) moreView.findViewById(R.id.iv_key_board);
+        ivPic = (ImageButton) moreView.findViewById(R.id.iv_key_pic);
+        editContent = (EditText) moreView.findViewById(R.id.edt_key_content);
+        editContent.setFocusable(true);
+        editContent.setFocusableInTouchMode(true);
+        editContent.requestFocus();
+//        rlKeyboard = (RelativeLayout) moreView
+//                .findViewById(R.id.rl_key_keyboard);
+        editContent.addTextChangedListener(textWatcher);
+        editContent.setOnFocusChangeListener(focusChangeListener);
         checkKeyboardHeight();
-        key_editText.setOnClickListener(this);
-        key_face_show.setOnClickListener(this);
-        key_face_hide.setOnClickListener(this);
-        key_more_show.setOnClickListener(this);
+        editContent.setOnClickListener(this);
+        ivEmoji.setOnClickListener(this);
+        ivBoard.setOnClickListener(this);
+        ivPic.setOnClickListener(this);
 
     }
 
@@ -99,21 +98,21 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.key_face_show:// 显示表情
+            case R.id.iv_key_emoji:// 显示表情
                 // 键盘
                 //showKeyBoardRl();
                 // 隐藏更多
                 //hideMore();
-                showFace();
+                showEmoji();
                 break;
-            case R.id.key_face_hide:// 隐藏表情
+            case R.id.iv_key_board:// 显示键盘
                 hideFace();
                 break;
-            case R.id.key_more_show:// 显示更多
-                showMore();
+            case R.id.iv_key_pic:
+                Toast.makeText(mcontext,"选择图片去",Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.key_editText:// 文字输入框
+            case R.id.edt_key_content:// 文字输入框
                 Log.i(TAG, " 文字输入框");
                 if (face_fl.getVisibility() == GONE) {
                     face_fl.setVisibility(VISIBLE);
@@ -126,21 +125,6 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
 
     }
 
-    /**
-     * 显示录入音频布局
-     */
-    private void showRecordVoice() {
-        if (keyBoardShow) {
-            hideKeyboard();
-        }
-        if (face_fl.isShown()) {
-            face_fl.setVisibility(GONE);
-            key_face_show.setVisibility(VISIBLE);
-            key_face_hide.setVisibility(INVISIBLE);
-        }
-        key_keyboard_rl.setVisibility(INVISIBLE);
-
-    }
 
     /**
      * 显示输入框布局
@@ -149,47 +133,18 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
         if (!keyBoardShow) {
             showKeyboard();
         }
-        key_keyboard_rl.setVisibility(VISIBLE);
     }
 
-    /**
-     * 显示更多功能页面
-     */
-    private void showMore() {
-        Log.i(TAG, "显示更多功能页面");
-        moreBoardShow = true;
-        key_more_show.setVisibility(INVISIBLE);
-        key_face_show.setVisibility(VISIBLE);
-        key_face_hide.setVisibility(INVISIBLE);
-        if (!face_fl.isShown()) {
-            face_fl.setVisibility(VISIBLE);
-        }
-        if (keyBoardShow) {
-            hideKeyboard();
-        }
-    }
 
-    /**
-     * 隐藏更多页面
-     */
-    private void hideMore() {
-        Log.i(TAG, "隐藏更多页面");
-        moreBoardShow = false;
-        key_more_show.setVisibility(VISIBLE);
-            face_fl.setVisibility(GONE);
-            showKeyboard();
-
-    }
 
     /**
      * 显示表情键盘
      */
-    private void showFace() {
+    private void showEmoji() {
         Log.i(TAG, "显示表情键盘");
         faecBoardShow = true;
-        key_face_show.setVisibility(INVISIBLE);
-        key_face_hide.setVisibility(VISIBLE);
-        key_more_show.setVisibility(VISIBLE);
+        ivEmoji.setVisibility(INVISIBLE);
+        ivBoard.setVisibility(VISIBLE);
         if (!face_fl.isShown()) {
             face_fl.setVisibility(VISIBLE);
         }
@@ -204,8 +159,8 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
     private void hideFace() {
         Log.i(TAG, "隐藏表情键盘");
         faecBoardShow = false;
-        key_face_show.setVisibility(VISIBLE);
-        key_face_hide.setVisibility(INVISIBLE);
+        ivEmoji.setVisibility(VISIBLE);
+        ivBoard.setVisibility(INVISIBLE);
         showKeyboard();
     }
 
@@ -218,11 +173,8 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
             keyBoardShow = true;
             faecBoardShow = false;
             moreBoardShow = false;
-            key_face_show.setVisibility(VISIBLE);
-            key_face_hide.setVisibility(INVISIBLE);
-            if (key_editText.getText().toString().length() == 0) {
-                key_more_show.setVisibility(VISIBLE);
-            }
+            ivEmoji.setVisibility(VISIBLE);
+            ivBoard.setVisibility(INVISIBLE);
         }
 
     }
@@ -269,8 +221,8 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
     };
 
     public void emptyKeyEdit() {
-        if (key_editText != null) {
-            key_editText.setText("");
+        if (editContent != null) {
+            editContent.setText("");
         }
     }
 
@@ -280,17 +232,19 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
      * @return
      */
     public EditText getKeyEditText() {
-        return key_editText;
+        return editContent;
     }
-
+//SPUtils.put(paramActivity,"KeyboardHeight", height);
+//    height = (int) SPUtils.get(paramActivity,"KeyboardHeight",787);//787为默认软键盘高度 基本差不离
+//
     /**
      * 返回输入框输入内容
      *
      * @return
      */
     public String getEditText() {
-        if (key_editText != null) {
-            return key_editText.getText().toString();
+        if (editContent != null) {
+            return editContent.getText().toString();
         }
         return null;
     }
@@ -359,9 +313,8 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
         KLog.i(TAG, "moreBoardShow" + moreBoardShow);
 
         hideKeyboard();
-        key_face_show.setVisibility(VISIBLE);
-        key_face_hide.setVisibility(INVISIBLE);
-        key_more_show.setVisibility(VISIBLE);
+        ivEmoji.setVisibility(VISIBLE);
+        ivBoard.setVisibility(INVISIBLE);
         face_fl.setVisibility(GONE);
     }
 
@@ -369,12 +322,12 @@ public class KeyLayout extends LinearLayout implements OnClickListener {
         if (face_fl.getVisibility() == GONE) {
             face_fl.setVisibility(VISIBLE);
         }
-        key_editText.setFocusable(true);
-        key_editText.setFocusableInTouchMode(true);
-        key_editText.requestFocus();
-        InputMethodManager imm = (InputMethodManager) key_editText.getContext()
+        editContent.setFocusable(true);
+        editContent.setFocusableInTouchMode(true);
+        editContent.requestFocus();
+        InputMethodManager imm = (InputMethodManager) editContent.getContext()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(key_editText, 0);
+        imm.showSoftInput(editContent, 0);
     }
 
     /**

@@ -30,21 +30,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".test.DPIActivity">
-
-
-        </activity>
+        <activity android:name=".test.DPIActivity"></activity>
         <activity android:name=".loadingview.LoadingActivity" />
-        <activity android:name=".multitype.MultiTypeActivity">
+        <activity android:name=".multitype.MultiTypeActivity"></activity>
+        <activity android:name=".emoji.EmojiActivity">
 
-
-        </activity>
-        <activity android:name=".keyboard.EmojiActivity">
         </activity>
         <activity android:name=".key.ChatActivity">
+
+        </activity>
+        <activity android:name=".environment.EnvironmentActivity">
+
+        </activity>
+        <activity android:name=".emotionkeyboard.activity.ListViewBarEditActivity"></activity>
+        <activity android:name=".emotionkeyboard.activity.EditTextActivity"></activity>
+        <activity android:name=".emotionkeyboard.activity.EmotionKeyBoardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
